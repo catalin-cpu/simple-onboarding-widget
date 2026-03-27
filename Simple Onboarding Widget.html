@@ -747,6 +747,29 @@
   let hasOTA   = false;
   let isHospitality = true;
 
+  // ── Initialize demo content on page load ──
+  window.addEventListener('DOMContentLoaded', function() {
+    // Pre-fill Step 1: Select "Apartment" by default
+    const apartmentCard = document.querySelector('.option-card[onclick="selectOption(this,\'apartment\')"]');
+    selectOption(apartmentCard, 'apartment');
+
+    // Pre-fill Step 2: OTA Link
+    document.getElementById('ota-link').value = 'https://www.airbnb.com/rooms/12345678';
+
+    // Pre-fill Step 3: Property details
+    document.getElementById('user-name').value = 'Sarah Mitchell';
+    document.getElementById('prop-name').value = 'Oceanview Luxury Apartment';
+    document.getElementById('prop-location').value = 'Malibu, California';
+    document.getElementById('user-email').value = 'sarah@example.com';
+    document.getElementById('user-phone').value = '+1 (555) 123-4567';
+
+    // Pre-fill Step 4: Password
+    document.getElementById('user-password').value = 'DemoPass123!';
+
+    // Trigger phone preview update with demo data
+    updatePhoneDetails();
+  });
+
   // ── Step navigation ──
   function goStep(n) {
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
@@ -775,7 +798,7 @@
   }
 
   function goStep2() {
-    if (!propType) { alert('Please select a property type.'); return; }
+    // Demo mode: skip validation
     if (propType === 'no-property') {
       isHospitality = false;
       goStep(3); // skip OTA for non-hospitality
@@ -840,17 +863,13 @@
 
   // ── Step 4 ──
   function goStep4() {
-    const name  = document.getElementById('user-name').value.trim();
-    const email = document.getElementById('user-email').value.trim();
-    if (!name)  { alert('Please enter your name.'); return; }
-    if (!email) { alert('Please enter your contact email.'); return; }
+    // Demo mode: skip validation - all fields are pre-filled
     goStep(4);
   }
 
   // ── Create account → show dashboard ──
   function createAccount() {
-    const pwd = document.getElementById('user-password').value;
-    if (!pwd || pwd.length < 8) { alert('Please enter a password with at least 8 characters.'); return; }
+    // Demo mode: skip validation - password is pre-filled
     // Update guide name in dashboard with entered property name
     const propName = document.getElementById('prop-name').value.trim() || 'Beach Retreat';
     document.getElementById('dash-guide-name-1').textContent = propName;
